@@ -1,0 +1,19 @@
+version: '3'
+services:
+  bundler:
+    hostname: bundler
+    build: .
+    ports:
+      - ${DOCKER_LISTEN:-4337}:4337
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        set -e
+
+        cp /input/.env .
+
+        /app/stackup-bundler start --mode private
+
+    volumes:
+      - ./input:/input
